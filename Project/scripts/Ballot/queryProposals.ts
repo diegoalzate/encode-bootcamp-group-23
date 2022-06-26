@@ -22,8 +22,10 @@ const main = async () => {
     ballotJson.abi,
     signer
   ) as Ballot;
+  console.log("connected to contract: " + ballotContract.address);
   let i = 0;
   const proposals = [];
+  console.log("Fetching proposals...");
   while (true) {
     try {
       const proposal = await ballotContract.proposals(i);
@@ -37,7 +39,7 @@ const main = async () => {
       break;
     }
   }
-  console.log(proposals);
+  console.log("Proposals: \n" + proposals.join("\n"));
 };
 
 main().catch((error) => {

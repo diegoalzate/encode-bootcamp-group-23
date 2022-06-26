@@ -89,252 +89,246 @@ describe("Ballot", function () {
   describe("when the voter interact with the vote function in the contract", function () {
     // TODO
     it("Voter is allowed to vote on proposal and their voted status is true", async function () {
-    const assignVotingRights = await ballotContract.giveRightToVote( accounts[1].address);
-    await assignVotingRights.wait()     
-    
-    const voter = await ballotContract.voters(accounts[1].address);
-    expect(voter.weight.toNumber()).to.eq(1);
+      const assignVotingRights = await ballotContract.giveRightToVote(
+        accounts[1].address
+      );
+      await assignVotingRights.wait();
 
-    const doVote =  await ballotContract.connect(accounts[1]).vote(1)
-    await doVote.wait()
+      const voter = await ballotContract.voters(accounts[1].address);
+      expect(voter.weight.toNumber()).to.eq(1);
 
+      const doVote = await ballotContract.connect(accounts[1]).vote(1);
+      await doVote.wait();
 
-    const votingStatus = await ballotContract.voters( accounts[1].address )
-    expect(votingStatus.voted).to.eq(true);
-
-    })
-
-
+      const votingStatus = await ballotContract.voters(accounts[1].address);
+      expect(votingStatus.voted).to.eq(true);
+    });
   });
 
   describe("when the voter interact with the delegate function in the contract", function () {
     // TODO
     it("His voting weight goes to 0 and the other guy's voting weight increase by 1", async function () {
+      const assignVotingRights = await ballotContract.giveRightToVote(
+        accounts[1].address
+      );
+      await assignVotingRights.wait();
 
+      const delegate = await ballotContract
+        .connect(accounts[1])
+        .delegate(accounts[0].address);
+      await delegate.wait();
 
-      const assignVotingRights = await ballotContract.giveRightToVote( accounts[1].address);
-      await assignVotingRights.wait()     
-
-      const delegate = await ballotContract.connect(accounts[1]).delegate(accounts[0].address)
-      await delegate.wait()
-      
       const voter = await ballotContract.voters(accounts[0].address);
       expect(voter.weight.toNumber()).to.eq(2);
-
-
-
     });
   });
 
   describe("when the an attacker interact with the giveRightToVote function in the contract", function () {
     // TODO
     it("State reverts with error", async function () {
-   
       // const attack = await ballotContract.connect(accounts[8]).giveRightToVote(accounts[8].address);
-      // await attack.wait();      
+      // await attack.wait();
 
-      await expect( ballotContract.connect(accounts[8]).giveRightToVote(accounts[8].address)
+      await expect(
+        ballotContract.connect(accounts[8]).giveRightToVote(accounts[8].address)
       ).to.be.revertedWith("Only chairperson can give right to vote.");
-      
-
     });
   });
 
   describe("when the an attacker interact with the vote function in the contract", function () {
     // TODO
     it("State reverts with error", async function () {
-
-
-      await expect( ballotContract.connect(accounts[8]).vote(1)
+      await expect(
+        ballotContract.connect(accounts[8]).vote(1)
       ).to.be.revertedWith("Has no right to vote");
-
-
     });
   });
 
   describe("when the an attacker interact with the delegate function in the contract", function () {
     // TODO
     it("Nothing happens to voter with voting rights and someone without any", async function () {
+      const assignVotingRights = await ballotContract.giveRightToVote(
+        accounts[1].address
+      );
+      await assignVotingRights.wait();
 
-      const assignVotingRights = await ballotContract.giveRightToVote( accounts[1].address);
-      await assignVotingRights.wait()    
-
-      await expect( ballotContract.connect(accounts[8]).delegate(accounts[3].address)
+      await expect(
+        ballotContract.connect(accounts[8]).delegate(accounts[3].address)
       ).to.be.revertedWith("");
 
       const voter = await ballotContract.voters(accounts[1].address);
       expect(voter.weight.toNumber()).to.eq(1);
 
-      await expect( ballotContract.connect(accounts[8]).delegate(accounts[3].address)
+      await expect(
+        ballotContract.connect(accounts[8]).delegate(accounts[3].address)
       ).to.be.revertedWith("");
-
-
     });
   });
 
   describe("when someone interact with the winningProposal function before any votes are cast", function () {
     // TODO
     it("Should return 0", async function () {
-    
+      const voteResult = await ballotContract.winningProposal();
 
-      const voteResult = await ballotContract.winningProposal()
+      console.log("Result: " + voteResult);
 
-      console.log('Result: ' + voteResult)
-
-      expect( voteResult ).to.eq(0)
+      expect(voteResult).to.eq(0);
 
       //expect(  voteResult ).to.equal( "test proposal 2" )
-
-
     });
   });
 
   describe("when someone interact with the winningProposal function after one vote is cast for the first proposal", function () {
     // TODO
     it("Show index of winning proposal", async function () {
+      const proposalIndex = 2;
 
-      const proposalIndex = 2
+      const assignVotingRights = await ballotContract.giveRightToVote(
+        accounts[1].address
+      );
+      await assignVotingRights.wait();
 
-      const assignVotingRights = await ballotContract.giveRightToVote( accounts[1].address);
-      await assignVotingRights.wait()     
-      
       // const voter = await ballotContract.voters(accounts[1].address);
       // expect(voter.weight.toNumber()).to.eq(1);
 
+      const doVote = await ballotContract
+        .connect(accounts[1])
+        .vote(proposalIndex);
+      await doVote.wait();
 
-  
-      const doVote =  await ballotContract.connect(accounts[1]).vote( proposalIndex)
-      await doVote.wait()
-  
+      const voteResult = await ballotContract.winningProposal();
 
-      const voteResult = await ballotContract.winningProposal()
-
-      console.log('Result: ' + voteResult)
+      console.log("Result: " + voteResult);
 
       expect(voteResult).to.eq(proposalIndex);
 
-      // const winningName = ethers.utils.parseBytes32String( await ballotContract.winnerName() ) 
+      // const winningName = ethers.utils.parseBytes32String( await ballotContract.winnerName() )
 
       // console.log('Winning Proposal: ' + winningName)
-
     });
   });
 
   describe("when someone interact with the winnerName function before any votes are cast", function () {
     // TODO
     it("Returns 'Propsal 1'", async function () {
-    
-      
-      const winningName = ethers.utils.parseBytes32String( await ballotContract.winnerName() ) 
+      const winningName = ethers.utils.parseBytes32String(
+        await ballotContract.winnerName()
+      );
 
-      console.log('Winning Proposal: ' + winningName)
+      console.log("Winning Proposal: " + winningName);
 
-      expect(winningName).to.eq('Proposal 1');
-
-
-
-
+      expect(winningName).to.eq("Proposal 1");
     });
   });
 
   describe("when someone interact with the winnerName function after one vote is cast for the first proposal", function () {
     // TODO
     it("The winning proposalName EQUALS  winningName", async function () {
-  
+      const proposalIndex = 2;
 
-      const proposalIndex = 2
+      const assignVotingRights = await ballotContract.giveRightToVote(
+        accounts[1].address
+      );
+      await assignVotingRights.wait();
 
-      const assignVotingRights = await ballotContract.giveRightToVote( accounts[1].address);
-      await assignVotingRights.wait()     
-      
       // const voter = await ballotContract.voters(accounts[1].address);
       // expect(voter.weight.toNumber()).to.eq(1);
 
+      const doVote = await ballotContract
+        .connect(accounts[1])
+        .vote(proposalIndex);
+      await doVote.wait();
 
-  
-      const doVote =  await ballotContract.connect(accounts[1]).vote( proposalIndex)
-      await doVote.wait()
-  
-      const winningName = ethers.utils.parseBytes32String( await ballotContract.winnerName() ) 
+      const winningName = ethers.utils.parseBytes32String(
+        await ballotContract.winnerName()
+      );
 
-      console.log('Winning Proposal: ' + winningName)
+      console.log("Winning Proposal: " + winningName);
 
-      const proposalName =   ethers.utils.parseBytes32String( (await ballotContract.proposals(proposalIndex)).name )
+      const proposalName = ethers.utils.parseBytes32String(
+        (await ballotContract.proposals(proposalIndex)).name
+      );
 
-      console.log('Proposal Name: ' + proposalName) 
+      console.log("Proposal Name: " + proposalName);
 
-      expect(winningName).to.eq( proposalName    );
-
-
-
-
-
-
+      expect(winningName).to.eq(proposalName);
     });
   });
 
   describe("when someone interact with the winningProposal function and winnerName after 5 random votes are cast for the proposals", function () {
     // TODO
     it("Returns winning proposal index and its name. proposals[winningProposal].name = winningName", async function () {
+      let assignVotingRights = await ballotContract.giveRightToVote(
+        accounts[1].address
+      );
+      await assignVotingRights.wait();
 
-      let assignVotingRights = await ballotContract.giveRightToVote( accounts[1].address);
-      await assignVotingRights.wait()  
+      assignVotingRights = await ballotContract.giveRightToVote(
+        accounts[2].address
+      );
+      await assignVotingRights.wait();
 
-       assignVotingRights = await ballotContract.giveRightToVote( accounts[2].address);
-      await assignVotingRights.wait()        
+      assignVotingRights = await ballotContract.giveRightToVote(
+        accounts[3].address
+      );
+      await assignVotingRights.wait();
 
-      assignVotingRights = await ballotContract.giveRightToVote( accounts[3].address);
-      await assignVotingRights.wait()  
+      assignVotingRights = await ballotContract.giveRightToVote(
+        accounts[4].address
+      );
+      await assignVotingRights.wait();
 
-      assignVotingRights = await ballotContract.giveRightToVote( accounts[4].address);
-      await assignVotingRights.wait()  
+      assignVotingRights = await ballotContract.giveRightToVote(
+        accounts[5].address
+      );
+      await assignVotingRights.wait();
 
-      assignVotingRights = await ballotContract.giveRightToVote( accounts[5].address);
-      await assignVotingRights.wait()  
+      let doVote = await ballotContract
+        .connect(accounts[1])
+        .vote(1 /*proposalIndex*/);
+      await doVote.wait();
 
+      doVote = await ballotContract
+        .connect(accounts[2])
+        .vote(2 /*proposalIndex*/);
+      await doVote.wait();
 
-      let doVote =  await ballotContract.connect(accounts[1]).vote( 1 /*proposalIndex*/)
-      await doVote.wait()      
+      doVote = await ballotContract
+        .connect(accounts[3])
+        .vote(0 /*proposalIndex*/);
+      await doVote.wait();
 
-      doVote =  await ballotContract.connect(accounts[2]).vote( 2 /*proposalIndex*/)
-      await doVote.wait()      
+      doVote = await ballotContract
+        .connect(accounts[4])
+        .vote(0 /*proposalIndex*/);
+      await doVote.wait();
 
-      doVote =  await ballotContract.connect(accounts[3]).vote( 0 /*proposalIndex*/)
-      await doVote.wait()      
+      doVote = await ballotContract
+        .connect(accounts[5])
+        .vote(0 /*proposalIndex*/);
+      await doVote.wait();
 
-      doVote =  await ballotContract.connect(accounts[4]).vote( 0 /*proposalIndex*/)
-      await doVote.wait()      
+      const voteResult = await ballotContract.winningProposal();
 
-      doVote =  await ballotContract.connect(accounts[5]).vote( 0 /*proposalIndex*/)
-      await doVote.wait()      
+      console.log("Result: " + voteResult);
 
-      const voteResult = await ballotContract.winningProposal()
+      const winningName = ethers.utils.parseBytes32String(
+        await ballotContract.winnerName()
+      );
 
-      console.log('Result: ' + voteResult)
+      console.log("Winning Proposal: " + winningName);
 
+      const proposalName = ethers.utils.parseBytes32String(
+        (await ballotContract.proposals(voteResult)).name
+      );
 
-      const winningName = ethers.utils.parseBytes32String( await ballotContract.winnerName() ) 
+      expect(proposalName).to.eq(winningName);
 
-      console.log('Winning Proposal: ' + winningName)
-
-
-
-      const proposalName =   ethers.utils.parseBytes32String( (await ballotContract.proposals(voteResult)).name )
-
-     expect(proposalName).to.eq(winningName)
-
-   
-     expect(   
-      
-
-      //proposals[winningProposal()].name = winnerName()
-      (await ballotContract.proposals(await ballotContract.winningProposal())).name ).to.eq( await ballotContract.winnerName()
-      
-      
-      )
-     
-
-
+      expect(
+        //proposals[winningProposal()].name = winnerName()
+        (await ballotContract.proposals(await ballotContract.winningProposal()))
+          .name
+      ).to.eq(await ballotContract.winnerName());
     });
   });
 });

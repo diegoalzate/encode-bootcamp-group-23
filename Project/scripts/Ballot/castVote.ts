@@ -19,8 +19,8 @@ const main = async () => {
   const ballotAddress = process.argv[2];
   if (process.argv.length < 4) throw new Error("missing proposal");
   const proposal = process.argv[3];
-  if (typeof +proposal === "number")
-    throw new Error("proposla arg has to be a number");
+  if (typeof +proposal !== "number")
+    throw new Error("proposal arg has to be a number");
   const ballotContract = new ethers.Contract(
     ballotAddress,
     ballotJson.abi,

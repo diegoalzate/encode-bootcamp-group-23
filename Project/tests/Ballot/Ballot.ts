@@ -87,6 +87,11 @@ describe("Ballot", function () {
 
   describe("when the voter interact with the vote function in the contract", function () {
     // TODO
+    describe("When the voter does not have nay rights to vote", async () => {
+      await expect(
+        ballotContract.connect(accounts[1].vote(0))
+      ).to.be.revertedWith("Has no right to vote");
+    });
     it("is not implemented", async function () {
       throw new Error("Not implemented");
     });

@@ -87,7 +87,6 @@ describe("Ballot", function () {
   });
 
   describe("when the voter interact with the vote function in the contract", function () {
-    // TODO
     it("Voter is allowed to vote on proposal and their voted status is true", async function () {
       const assignVotingRights = await ballotContract.giveRightToVote(
         accounts[1].address
@@ -106,7 +105,6 @@ describe("Ballot", function () {
   });
 
   describe("when the voter interact with the delegate function in the contract", function () {
-    // TODO
     it("His voting weight goes to 0 and the other guy's voting weight increase by 1", async function () {
       const assignVotingRights = await ballotContract.giveRightToVote(
         accounts[1].address
@@ -124,7 +122,6 @@ describe("Ballot", function () {
   });
 
   describe("when the an attacker interact with the giveRightToVote function in the contract", function () {
-    // TODO
     it("State reverts with error", async function () {
       // const attack = await ballotContract.connect(accounts[8]).giveRightToVote(accounts[8].address);
       // await attack.wait();
@@ -136,7 +133,6 @@ describe("Ballot", function () {
   });
 
   describe("when the an attacker interact with the vote function in the contract", function () {
-    // TODO
     it("State reverts with error", async function () {
       await expect(
         ballotContract.connect(accounts[8]).vote(1)
@@ -145,7 +141,6 @@ describe("Ballot", function () {
   });
 
   describe("when the an attacker interact with the delegate function in the contract", function () {
-    // TODO
     it("Nothing happens to voter with voting rights and someone without any", async function () {
       const assignVotingRights = await ballotContract.giveRightToVote(
         accounts[1].address
@@ -166,7 +161,6 @@ describe("Ballot", function () {
   });
 
   describe("when someone interact with the winningProposal function before any votes are cast", function () {
-    // TODO
     it("Should return 0", async function () {
       const voteResult = await ballotContract.winningProposal();
 
@@ -174,12 +168,11 @@ describe("Ballot", function () {
 
       expect(voteResult).to.eq(0);
 
-      //expect(  voteResult ).to.equal( "test proposal 2" )
+      // expect(  voteResult ).to.equal( "test proposal 2" )
     });
   });
 
   describe("when someone interact with the winningProposal function after one vote is cast for the first proposal", function () {
-    // TODO
     it("Show index of winning proposal", async function () {
       const proposalIndex = 2;
 
@@ -209,7 +202,6 @@ describe("Ballot", function () {
   });
 
   describe("when someone interact with the winnerName function before any votes are cast", function () {
-    // TODO
     it("Returns 'Propsal 1'", async function () {
       const winningName = ethers.utils.parseBytes32String(
         await ballotContract.winnerName()
@@ -222,7 +214,6 @@ describe("Ballot", function () {
   });
 
   describe("when someone interact with the winnerName function after one vote is cast for the first proposal", function () {
-    // TODO
     it("The winning proposalName EQUALS  winningName", async function () {
       const proposalIndex = 2;
 
@@ -256,7 +247,6 @@ describe("Ballot", function () {
   });
 
   describe("when someone interact with the winningProposal function and winnerName after 5 random votes are cast for the proposals", function () {
-    // TODO
     it("Returns winning proposal index and its name. proposals[winningProposal].name = winningName", async function () {
       let assignVotingRights = await ballotContract.giveRightToVote(
         accounts[1].address
@@ -325,7 +315,7 @@ describe("Ballot", function () {
       expect(proposalName).to.eq(winningName);
 
       expect(
-        //proposals[winningProposal()].name = winnerName()
+        // proposals[winningProposal()].name = winnerName()
         (await ballotContract.proposals(await ballotContract.winningProposal()))
           .name
       ).to.eq(await ballotContract.winnerName());

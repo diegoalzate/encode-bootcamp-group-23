@@ -15,14 +15,14 @@ const main = async () => {
 
   const provider = ethers.providers.getDefaultProvider("ropsten");
   const signer = wallet.connect(provider);
-  if (process.argv.length < 3) throw new Error("missing ballot address as arg");
+  if (process.argv.length < 3) throw new Error("Missing ballot address as arg");
   const ballotAddress = process.argv[2];
   const ballotContract = new ethers.Contract(
     ballotAddress,
     ballotJson.abi,
     signer
   ) as Ballot;
-  console.log("connected to contract: " + ballotContract.address);
+  console.log("Connected to contract: " + ballotContract.address);
   let i = 0;
   const proposals = [];
   console.log("Fetching proposals...");

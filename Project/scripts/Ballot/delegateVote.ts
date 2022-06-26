@@ -15,9 +15,9 @@ const main = async () => {
 
   const provider = ethers.providers.getDefaultProvider("ropsten");
   const signer = wallet.connect(provider);
-  if (process.argv.length < 3) throw new Error("missing ballot address as arg");
+  if (process.argv.length < 3) throw new Error("Missing ballot address as arg");
   const ballotAddress = process.argv[2];
-  if (process.argv.length < 4) throw new Error("missing delegate");
+  if (process.argv.length < 4) throw new Error("Missing delegate");
   const delegate = process.argv[3];
   const ballotContract = new ethers.Contract(
     ballotAddress,

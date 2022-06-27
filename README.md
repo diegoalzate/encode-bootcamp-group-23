@@ -8,6 +8,6 @@ This repo contains the assignments that were completed during encode bootcamp ju
 - bfranceschin
 - diegoalzate
 - dlanesan
-- Epitaxial Layer
+- codesport (Mr. Epitaxial Layer)
 - Martina Berraz
 - Maru

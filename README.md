@@ -25,6 +25,7 @@ https://www.npmjs.com/package/node-json-db
 
 https://nft.storage/
 # Homework
+* Create Github Issues with your questions about this lesson
 * Read the references
 * Experiment with IPFS with other files and folders
 # Weekend project

@@ -57,3 +57,10 @@ export function saveAddress (filename: string, address: string)
     }
   });
 }
+
+export async function reportGas(transactionReceipt: any) {
+  const gasUsed = transactionReceipt.gasUsed;
+  const effectiveGasPrice = transactionReceipt.effectiveGasPrice;
+  const txFee = gasUsed.mul(effectiveGasPrice);
+  console.log("Gas spent: ", gasUsed.toString(), " fee: ", txFee.toString());
+}

@@ -16,3 +16,5 @@ artifacts
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
+
+contracts.json

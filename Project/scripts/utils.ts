@@ -1,7 +1,8 @@
 import { ethers } from "ethers";
 import "dotenv/config";
-import { string } from "hardhat/internal/core/params/argumentTypes";
-import { isAddress } from "ethers/lib/utils";
+import * as tokenSavedAddress from "../tokenAddress.json"
+import * as tokenjson from "../artifacts/contracts/Token.sol/MyToken.json";
+import { MyToken } from "../typechain"
 
 // This key is already public on Herong's Tutorial Examples - v1.03, by Dr. Herong Yang
 // Do never expose your keys like this
@@ -63,4 +64,15 @@ export async function reportGas(transactionReceipt: any) {
   const effectiveGasPrice = transactionReceipt.effectiveGasPrice;
   const txFee = gasUsed.mul(effectiveGasPrice);
   console.log("Gas spent: ", gasUsed.toString(), " fee: ", txFee.toString());
+}
+
+export function getTokenContract (signer: ethers.Wallet)
+{
+  console.log("Saved Token address: ", tokenSavedAddress.address);
+  const tokenFactory = new ethers.ContractFactory(
+    tokenjson.abi,
+    tokenjson.bytecode,
+    signer
+  );
+  return tokenFactory.attach(tokenSavedAddress.address) as MyToken;
 }

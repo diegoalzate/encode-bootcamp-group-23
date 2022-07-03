@@ -5,22 +5,12 @@ import {
   setupWallet, 
   setupProvider, 
   reportGas,
+  getTokenContract,
   convertStringArrayToBytes32} from "../utils";
 import * as tokenjson from "../../artifacts/contracts/Token.sol/MyToken.json";
 import * as savedAddress from "../../tokenAddress.json"
 import { MyToken } from "../../typechain"
 import { BigNumber } from "ethers";
-
-function getTokenContract (signer: ethers.Wallet)
-{
-  console.log("Saved Token address: ", savedAddress.address);
-  const tokenFactory = new ethers.ContractFactory(
-    tokenjson.abi,
-    tokenjson.bytecode,
-    signer
-  );
-  return tokenFactory.attach(savedAddress.address) as MyToken;
-}
 
 async function mint (signer: ethers.Wallet, dest: string, amount: number) {
   

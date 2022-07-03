@@ -18,3 +18,4 @@ artifacts
 .pnp.*
 
 contracts.json
+tokenAddress.json

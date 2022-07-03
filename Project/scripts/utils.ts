@@ -1,5 +1,7 @@
 import { ethers } from "ethers";
 import "dotenv/config";
+import { string } from "hardhat/internal/core/params/argumentTypes";
+import { isAddress } from "ethers/lib/utils";
 
 // This key is already public on Herong's Tutorial Examples - v1.03, by Dr. Herong Yang
 // Do never expose your keys like this
@@ -40,4 +42,18 @@ export async function checkBalance (signer: ethers.Wallet)
   if (balance < 0.01) {
     throw new Error("Not enough ether");
   }
+}
+ 
+export function saveAddress (filename: string, address: string) 
+{
+  const fs = require('fs');
+  const jsonData = {
+    address: address,
+  };
+  const jsonDataStr = JSON.stringify(jsonData);
+  fs.writeFile(filename, jsonDataStr, function(err: string) {
+    if (err) {
+        console.log(err);
+    }
+  });
 }

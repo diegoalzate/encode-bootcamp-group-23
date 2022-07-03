@@ -13,7 +13,6 @@ import { MyToken } from "../../typechain"
 import { BigNumber } from "ethers";
 
 async function mint (signer: ethers.Wallet, dest: string, amount: number) {
-  
   const contract = getTokenContract(signer);
   const beforeTotalSupply = await contract.totalSupply()
   console.log("Total supply before minting: ", beforeTotalSupply.toString());

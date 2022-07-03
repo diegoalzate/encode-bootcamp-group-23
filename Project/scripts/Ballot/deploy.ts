@@ -30,13 +30,13 @@ async function deploy(signer: ethers.Wallet, proposals: string[]) {
 }
 
 async function main() {
-
   const wallet = setupWallet();
   console.log(`Using address ${wallet.address}`);
 
   const provider = setupProvider();
   const signer = wallet.connect(provider);
   await checkBalance(signer);
+
   const proposals = process.argv.slice(2);
   if (proposals.length === 0) {
     console.log("Missing proposals.");

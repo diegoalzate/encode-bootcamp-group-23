@@ -2,7 +2,10 @@ import { ethers } from "ethers";
 import "dotenv/config";
 import * as tokenSavedAddress from "../tokenAddress.json"
 import * as tokenjson from "../artifacts/contracts/Token.sol/MyToken.json";
+import * as ballotJson from "../artifacts/contracts/CustomBallot.sol/CustomBallot.json";
 import { MyToken } from "../typechain"
+import { CustomBallot } from "../typechain"
+import * as ballotSavedAddress from "../ballotAddress.json"
 
 // This key is already public on Herong's Tutorial Examples - v1.03, by Dr. Herong Yang
 // Do never expose your keys like this
@@ -75,4 +78,14 @@ export function getTokenContract (signer: ethers.Wallet)
     signer
   );
   return tokenFactory.attach(tokenSavedAddress.address) as MyToken;
+}
+
+export function getBallotContract (signer: ethers.Wallet) {
+  const ballotFactory = new ethers.ContractFactory(
+    ballotJson.abi,
+    ballotJson.bytecode,
+    signer
+  );
+  const ballotContract = ballotFactory.attach(ballotSavedAddress.address) as CustomBallot;
+  return ballotContract;
 }

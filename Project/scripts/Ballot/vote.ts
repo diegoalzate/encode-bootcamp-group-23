@@ -5,6 +5,7 @@ import {
   setupWallet, 
   setupProvider, 
   reportGas,
+  getBallotContract,
   getTokenContract,
   convertStringArrayToBytes32} from "../utils";
 import { CustomBallot } from "../../typechain"
@@ -12,12 +13,7 @@ import * as ballotJson from "../../artifacts/contracts/CustomBallot.sol/CustomBa
 import * as ballotSavedAddress from "../../ballotAddress.json"
 
 async function vote(signer: ethers.Wallet, proposal: number) {
-  const ballotFactory = new ethers.ContractFactory(
-    ballotJson.abi,
-    ballotJson.bytecode,
-    signer
-  );
-  const ballotContract = ballotFactory.attach(ballotSavedAddress.address) as CustomBallot;
+  const ballotContract = getBallotContract(signer);
   const votingPower = await ballotContract.votingPower();
   console.log("Voting power: ", votingPower.toString());
   console.log("Awaiting confirmations");

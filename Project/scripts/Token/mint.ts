@@ -19,6 +19,7 @@ async function mint (signer: ethers.Wallet, dest: string, amount: number) {
   console.log("Minting ", amount.toString(), " to ", dest);
   const mintTx = await contract.mint(dest, amount);
   console.log("Awaiting confirmations");
+  console.log("Transaction hash: ", mintTx.hash);
   const mintTxReceipt = await mintTx.wait();
   reportGas(mintTxReceipt);
   

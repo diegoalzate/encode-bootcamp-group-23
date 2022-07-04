@@ -25,7 +25,7 @@ async function vote(signer: ethers.Wallet, proposal: number) {
   const txReceipt = await tx.wait();
   reportGas(txReceipt);
   const votingPowerAfter = await ballotContract.votingPower();
-  console.log("Voting power after: ", votingPower.toString());
+  console.log("Voting power after: ", votingPowerAfter.toString());
 }
 
 async function main() {

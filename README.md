@@ -6,7 +6,7 @@ This repo contains the assignments that were completed during encode bootcamp ju
 
 ### Members
 - bfranceschin
-- codesport (Mr. Epitaxial Layer)
+- codesport
 - diegoalzate
 - dlanesan
 - Martina Berraz

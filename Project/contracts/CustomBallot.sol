@@ -32,6 +32,10 @@ contract CustomBallot {
         referenceBlock = block.number;
     }
 
+    function getProposals() public view returns(Proposal[] memory){
+        return proposals;
+    }
+
     function vote(uint256 proposal, uint256 amount) external {
         uint256 votingPowerAvailable = votingPower();
         require(votingPowerAvailable >= amount, "Has not enough voting power");

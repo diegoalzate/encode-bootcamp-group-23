@@ -1,3 +1,4 @@
+/* eslint-disable spaced-comment */
 import { expect } from "chai";
 import { ethers } from "hardhat";
 // eslint-disable-next-line node/no-missing-import
@@ -162,7 +163,10 @@ describe("Ballot", function () {
 
   describe("when someone interact with the winningProposal function before any votes are cast", function () {
     it("Should return 0", async function () {
-      const voteResult = await ballotContract.winningProposal();
+      const voteResult = await ballotContract.winningProposal(
+        0,
+        PROPOSALS.length
+      );
 
       console.log("Result: " + voteResult);
 
@@ -189,7 +193,10 @@ describe("Ballot", function () {
         .vote(proposalIndex);
       await doVote.wait();
 
-      const voteResult = await ballotContract.winningProposal();
+      const voteResult = await ballotContract.winningProposal(
+        0,
+        PROPOSALS.length
+      );
 
       console.log("Result: " + voteResult);
 
@@ -298,7 +305,10 @@ describe("Ballot", function () {
         .vote(0 /*proposalIndex*/);
       await doVote.wait();
 
-      const voteResult = await ballotContract.winningProposal();
+      const voteResult = await ballotContract.winningProposal(
+        0,
+        PROPOSALS.length
+      );
 
       console.log("Result: " + voteResult);
 
@@ -316,8 +326,11 @@ describe("Ballot", function () {
 
       expect(
         // proposals[winningProposal()].name = winnerName()
-        (await ballotContract.proposals(await ballotContract.winningProposal()))
-          .name
+        (
+          await ballotContract.proposals(
+            await ballotContract.winningProposal(0, PROPOSALS.length)
+          )
+        ).name
       ).to.eq(await ballotContract.winnerName());
     });
   });

@@ -126,6 +126,8 @@ contract Ballot {
     /// @dev Computes the winning proposal taking all
     /// previous votes into account.
     function winningProposal(uint256 from, uint256 to) public view returns (uint256 winningProposal_) {
+        require(from > 0, "From index has to be larger than 0");
+        require(to < proposals.length, "To index has to be smaller than proposals length");
         uint256 winningVoteCount = 0;
         for (uint256 p = from; p < to; p++) {
             if (proposals[p].voteCount > winningVoteCount) {

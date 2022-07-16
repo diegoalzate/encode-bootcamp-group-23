@@ -1,0 +1,19 @@
+{
+  "name": "16-IPFS",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Encode-Club-Solidity-Bootcamp-June/16-IPFS.git",
+  "author": "Diego Alzate <diego35.da@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "backend": "yarn workspace backend start",
+    "backend:build": "yarn workspace backend build",
+    "dev": "yarn workspace frontend dev"
+  }
+}

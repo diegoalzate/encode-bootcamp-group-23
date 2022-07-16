@@ -1,8 +1,3 @@
-
-
-
-
-
 # To Deploy
 
 **NB:** Add `const provider = new ethers.providers.InfuraProvider("ropsten", INFURA_API_KEY)` to deploy script to eliminate the Ropsten rate limiting warning!
@@ -11,6 +6,14 @@ See examples from [searching Matheus' class](https://github.com/search?o=asc&q=o
 
 
 ![Deploy Results](images/deploy-output-2022-07-16.png)
+
+
+# Test Results
+
+Unit test file is in [`test/nft-test.ts`](test/nft-tests.ts)
+
+![Test Results](images/test-passing-2022-07-16.png)
+
 
 # To Build from From Scratch
 
@@ -27,8 +30,6 @@ yarn hardhat test
 ```
 
 # To Clone and Install
-
-![Test Results](images/test-passing-2022-07-16.png)
 
 Use your personal `hardhatconfig.ts`
 

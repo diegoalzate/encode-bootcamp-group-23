@@ -51,6 +51,15 @@ export class AppService {
     return this.get(fileId);
   }
 
+  getMetadata(fileId: number) {
+    const fileData: FileData = this.get(fileId);
+    const metadata = {
+      ...fileData.metadata,
+      image: `ipfs://${fileData.ipfs.path}`,
+    };
+    return metadata;
+  }
+
   getAll() {
     return this.db.getData('/');
   }
@@ -80,6 +89,19 @@ export class AppService {
     const ipfsData = await this.ipfsClient.add(fileBytes);
     this.db.push(`/${fileId}/ipfs`, ipfsData);
     return this.get(fileId);
+  }
+
+  async saveMetadataWithImageIpfs(fileId: number) {
+    const fileData: FileData = this.get(fileId);
+    const metadata = {
+      ...fileData.metadata,
+      image: `ipfs://${fileData.ipfs.path}`,
+    };
+    fs.writeFileSync('../upload/temp.json', JSON.stringify(metadata), 'utf8');
+    const fileBytes = fs.readFileSync('../upload/temp.json');
+    const ipfsData = await this.ipfsClient.add(fileBytes);
+    this.db.push(`/${fileId}/ipfs-metadata`, ipfsData);
+    return ipfsData;
   }
 
   async getFromIpfs(fileId: number) {

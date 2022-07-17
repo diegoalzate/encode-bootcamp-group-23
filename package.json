@@ -12,7 +12,7 @@
     ]
   },
   "scripts": {
-    "backend": "yarn workspace backend start",
+    "backend": "yarn workspace backend start:dev",
     "backend:build": "yarn workspace backend build",
     "dev": "yarn workspace frontend dev"
   },

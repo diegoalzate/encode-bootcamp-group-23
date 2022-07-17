@@ -8,6 +8,7 @@ import {
   UploadedFile,
   UseInterceptors,
   Response,
+  Req,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
@@ -153,6 +154,25 @@ export class AppController {
     }
   }
 
+  @Get('metadata/:id')
+  @ApiOperation({
+    summary: 'Get metadata',
+    description: 'Gets metadata from file id',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Metadata retrieved',
+  })
+  @ApiResponse({
+    status: 503,
+    description: 'Server Error',
+    type: HttpException,
+  })
+  getMetadata(@Param('id') id: string) {
+    const metadata = this.appService.getMetadata(+id);
+    return metadata;
+  }
+
   @Post('file')
   @ApiOperation({
     summary: 'Register file',
@@ -207,6 +227,25 @@ export class AppController {
   })
   setMetadata(@Body() body: SetMetadataDto) {
     const updatedObj = this.appService.setMetadata(body.id, body.metadata);
+    return updatedObj;
+  }
+
+  @Post('metadata-with-image')
+  @ApiOperation({
+    summary: 'Register metadata with image',
+    description: 'Registers a metadata for a nft',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Metadata registered',
+  })
+  @ApiResponse({
+    status: 503,
+    description: 'Server Error',
+    type: HttpException,
+  })
+  saveMetadataWithImageIpfs(@Body() body: UploadIpfsDto) {
+    const updatedObj = this.appService.saveMetadataWithImageIpfs(body.id);
     return updatedObj;
   }
 

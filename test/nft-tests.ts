@@ -11,10 +11,7 @@ describe("NFT Minter Contract", function () {
     const MINTER_ROLE = "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6"
     const PAUSER_ROLE = "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a"
 
-
-
     beforeEach(async () => {
-
         accounts = await ethers.getSigners();
         const factory = await ethers.getContractFactory("NFTMinter");
         contract = await factory.deploy( accounts[1].address, accounts[2].address, accounts[3].address )
@@ -24,14 +21,12 @@ describe("NFT Minter Contract", function () {
       
     describe("when the contract is deployed", function () {
 
-
+        // https://docs.openzeppelin.com/contracts/4.x/access-control#querying-privileged-accounts
      it("Should allow querying minter role", async function() {
 
         // let minterCount: number
         const minterCount = +( await contract.getRoleMemberCount( MINTER_ROLE ) )
-
         console.log("\t Number of Addresses with Mint Privedges: ", minterCount)
-
 
         const members = [];
         for (let i = 0; i < minterCount; ++i) {
@@ -58,8 +53,6 @@ describe("NFT Minter Contract", function () {
         console.log('\t Dummy Token URI: ', tokenURI)
 
         expect(tokenURI).to.equal('https://example.com')
-
-
 
 
      })

@@ -10,15 +10,13 @@ import NftList from '../src/components/nftList'
 import {
   contractAddress
 } from '../config'
-
-import NFTMinter from '../../../NFTMinter.json'
+import Link from 'next/link'
 
 let numberOfNftsDisplayed = 10
 
 export default function Home() {
   const [nfts, setNfts] = useState<any>([])
   const [loadingState, setLoadingState] = useState('not-loaded')
-  const [filterStr, setFilterStr] = useState('')
 
   useEffect(() => {
     loadNFTs()
@@ -38,20 +36,8 @@ export default function Home() {
     console.log(newNfts.slice(-numberOfNftsDisplayed))
   }
 
-  // const searchChange = (event) => {
-  //   console.log(event.target.value)
-  //   setFilterStr(event.target.value)
-  // }
-
   const getDisplayTokens = () => {
     let displayNfts = nfts
-    // let numberFilter = parseInt(filterStr)
-    // if (!isNaN(numberFilter) && numberFilter < displayNfts.length) {
-    //   displayNfts = [displayNfts[numberFilter]]
-    // }
-    // else if (filterStr !== '' ) {
-    //   displayNfts = displayNfts.filter((nft: any) => nft.name.toLowerCase().includes(filterStr.toLocaleLowerCase()))
-    // }
     return displayNfts.slice(-numberOfNftsDisplayed).reverse()
   }
 
@@ -59,9 +45,10 @@ export default function Home() {
 
   return (
     <div>
-      <p> Group 25.</p>
-      <p> Contract address {contractAddress}</p>
-      {/* <SearchBar onSearchChange={searchChange}></SearchBar> */}
+      <div className='flex flex-col items-center p-4 space-y-4'>
+        <h1 className='text-4xl'>Group 25</h1>
+        <h2>Contract address <Link href={`https://ropsten.etherscan.io/address/${contractAddress}`}><span  className=' cursor-pointer underline decoration-green-400 decoration-wavy'>{contractAddress}</span></Link></h2>
+      </div>
       <NftList nfts={getDisplayTokens()}></NftList>
     </div>
   )

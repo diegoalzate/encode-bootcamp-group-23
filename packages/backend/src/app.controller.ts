@@ -230,6 +230,25 @@ export class AppController {
     return updatedObj;
   }
 
+  @Post('metadata-with-image')
+  @ApiOperation({
+    summary: 'Register metadata with image',
+    description: 'Registers a metadata for a nft',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Metadata registered',
+  })
+  @ApiResponse({
+    status: 503,
+    description: 'Server Error',
+    type: HttpException,
+  })
+  saveMetadataWithImageIpfs(@Body() body: UploadIpfsDto) {
+    const updatedObj = this.appService.saveMetadataWithImageIpfs(body.id);
+    return updatedObj;
+  }
+
   @Post('ipfs-save')
   @ApiOperation({
     summary: 'Register file metadata',

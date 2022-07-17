@@ -1,7 +1,7 @@
 
   // invisible friends mainnet contract
   // metadata and images are ipfs addresses
-  export const contractAddress = "0x59468516a8259058baD1cA5F8f4BFF190d30E066" 
+  export const contractAddress = "0x46e6A9727D97bC3391C79D6Fa834d096BC7322b6" 
   
   // cool cats mainnet contract
   // metadata http

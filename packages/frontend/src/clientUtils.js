@@ -8,7 +8,7 @@ import {
 
 import NFTMinter from '../../../NFTMinter.json'
 
-export const ipfsToHTTP = (ipfsName) => ipfsName.replace("ipfs://", "https://ipfs.io/ipfs/");
+export const ipfsToHTTP = (ipfsName) => ipfsName.replace("ipfs://", "https://ipfs.infura.io/ipfs/");
 
 const getSignerContract = async () => {
   const web3Modal = new Web3Modal()
@@ -23,7 +23,6 @@ const forEachNft = async (provider, func) => {
   const values = []
   try {
     const contract = new ethers.Contract(contractAddress, NFTMinter.abi, provider)
-    console.log(contract);
     let numberOfTokens = (await contract.totalSupply()).toNumber()
     // temp
     const tempLimit = 10;
@@ -45,8 +44,8 @@ export const getURIs = async (provider) => {
 export const getNftMetaData = async (provider) => {
   const func = async (contract, tokenId) => {
     const uri = await contract.tokenURI(tokenId)
-    console.log(uri);
-    const request =  await axios.get(ipfsToHTTP(uri))
+    console.log("uri: ",  uri);
+    const request =  await axios.get(uri)
     return request.data
   }
   return forEachNft(provider, func)
@@ -54,8 +53,8 @@ export const getNftMetaData = async (provider) => {
 
 export const getNfts = async (provider) => {
   const metaData = await getNftMetaData(provider);
-  console.log(metaData)
   const nfts = metaData.map((meta, i) => {
+    console.log("meta: ", meta)
     const nft = {...meta}
     nft.tokenId = i
     nft.image = ipfsToHTTP(nft.image)

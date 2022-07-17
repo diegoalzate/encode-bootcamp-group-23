@@ -15,5 +15,8 @@
     "backend": "yarn workspace backend start",
     "backend:build": "yarn workspace backend build",
     "dev": "yarn workspace frontend dev"
+  },
+  "dependencies": {
+    "web3modal": "^1.9.8"
   }
 }

@@ -1,1 +1,63 @@
-{}
+{
+    "0": {
+        "file": {
+            "fileName": "localhost_3000_ranking.png",
+            "mimetype": "image/png",
+            "storageName": "d260e6f3817e75f9ea2d9c3a0caea72f",
+            "size": 31356
+        },
+        "ipfs": {
+            "path": "QmTnfPcQbae2knJwn2YVMX1pgktb4YLectNXTNkzLbY9Qt",
+            "cid": {
+                "code": 112,
+                "version": 0,
+                "hash": {
+                    "0": 18,
+                    "1": 32,
+                    "2": 80,
+                    "3": 244,
+                    "4": 78,
+                    "5": 73,
+                    "6": 82,
+                    "7": 40,
+                    "8": 65,
+                    "9": 72,
+                    "10": 50,
+                    "11": 232,
+                    "12": 68,
+                    "13": 82,
+                    "14": 123,
+                    "15": 6,
+                    "16": 16,
+                    "17": 5,
+                    "18": 207,
+                    "19": 100,
+                    "20": 185,
+                    "21": 223,
+                    "22": 196,
+                    "23": 133,
+                    "24": 28,
+                    "25": 207,
+                    "26": 128,
+                    "27": 217,
+                    "28": 232,
+                    "29": 143,
+                    "30": 32,
+                    "31": 35,
+                    "32": 193,
+                    "33": 33
+                }
+            },
+            "size": 31370
+        },
+        "metadata": {
+            "name": "string",
+            "description": "string",
+            "author": "string",
+            "timestamp": 0,
+            "type": "string",
+            "class": "string",
+            "score": 0
+        }
+    }
+}

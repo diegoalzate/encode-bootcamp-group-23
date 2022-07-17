@@ -51,6 +51,10 @@ export class AppService {
     return this.get(fileId);
   }
 
+  getMetadata(fileId: string) {
+    return this.db.getData(`/${fileId}/metadata`);
+  }
+
   getAll() {
     return this.db.getData('/');
   }

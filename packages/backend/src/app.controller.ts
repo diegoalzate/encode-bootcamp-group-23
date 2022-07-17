@@ -8,6 +8,7 @@ import {
   UploadedFile,
   UseInterceptors,
   Response,
+  Req,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
@@ -151,6 +152,25 @@ export class AppController {
       console.error(error);
       throw new HttpException(error.message, 503);
     }
+  }
+
+  @Get('metadata/:id')
+  @ApiOperation({
+    summary: 'Get metadata',
+    description: 'Gets metadata from file id',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Metadata retrieved',
+  })
+  @ApiResponse({
+    status: 503,
+    description: 'Server Error',
+    type: HttpException,
+  })
+  getMetadata(@Param('id') id: string) {
+    const metadata = this.appService.getMetadata(id);
+    return metadata;
   }
 
   @Post('file')

@@ -169,7 +169,7 @@ export class AppController {
     type: HttpException,
   })
   getMetadata(@Param('id') id: string) {
-    const metadata = this.appService.getMetadata(id);
+    const metadata = this.appService.getMetadata(+id);
     return metadata;
   }
 

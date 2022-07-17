@@ -51,8 +51,13 @@ export class AppService {
     return this.get(fileId);
   }
 
-  getMetadata(fileId: string) {
-    return this.db.getData(`/${fileId}/metadata`);
+  getMetadata(fileId: number) {
+    const fileData: FileData = this.get(fileId);
+    const metadata = {
+      ...fileData.metadata,
+      image: `ipfs://${fileData.ipfs.path}`,
+    };
+    return metadata;
   }
 
   getAll() {

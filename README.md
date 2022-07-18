@@ -44,5 +44,5 @@ Unit test file is in [`test/nft-test.ts`](test/nft-tests.ts)
 
     * See examples from [searching Matheus' class](https://github.com/search?o=asc&q=org%3AEncode-Club-Solidity-Bootcamp-June+Infura&s=indexed&type=Code) repo or from [my teammate](https://github.com/diegoalzate/encode-bootcamp-group-23/blob/02-Homework-Governance/Project/scripts/utils.ts#L23-L31)
 
-2. Hardhat Runtime Environment Not Set Up in Class Demos. Specifically, `const contract = await hre.ethers.getContractAt("NFTMinter", contractAddress)` doesn't work because `getContractAt()` not available even though `import "@nomiclabs/hardhat-ethers"` has been added to [hardhat.config.ts](https://hardhat.org/hardhat-runner/plugins/nomiclabs-hardhat-ethers#installation) per hardhat documentation
+2. Hardhat Runtime Environment (hre) was not used in class examples. Specifically, `const contract = await hre.ethers.getContractAt("NFTMinter", contractAddress)` doesn't work because `getContractAt()` not available eventhough `import "@nomiclabs/hardhat-ethers"` has been added to [hardhat.config.ts](https://hardhat.org/hardhat-runner/plugins/nomiclabs-hardhat-ethers#installation) per hardhat documentation
 

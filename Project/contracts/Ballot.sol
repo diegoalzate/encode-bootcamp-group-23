@@ -27,7 +27,7 @@ contract Ballot {
 
     // A dynamically-sized array of `Proposal` structs.
     Proposal[] public proposals;
-
+ 
     /// Create a new ballot to choose one of `proposalNames`.
     constructor(bytes32[] memory proposalNames) {
         chairperson = msg.sender;
@@ -125,9 +125,11 @@ contract Ballot {
 
     /// @dev Computes the winning proposal taking all
     /// previous votes into account.
-    function winningProposal() public view returns (uint256 winningProposal_) {
+    function winningProposal(uint256 from, uint256 to) public view returns (uint256 winningProposal_) {
+        require(from > 0, "From index has to be larger than 0");
+        require(to < proposals.length, "To index has to be smaller than proposals length");
         uint256 winningVoteCount = 0;
-        for (uint256 p = 0; p < proposals.length; p++) {
+        for (uint256 p = from; p < to; p++) {
             if (proposals[p].voteCount > winningVoteCount) {
                 winningVoteCount = proposals[p].voteCount;
                 winningProposal_ = p;
@@ -139,6 +141,6 @@ contract Ballot {
     // of the winner contained in the proposals array and then
     // returns the name of the winner
     function winnerName() external view returns (bytes32 winnerName_) {
-        winnerName_ = proposals[winningProposal()].name;
+        winnerName_ = proposals[winningProposal(0, proposals.length)].name;
     }
 }

@@ -5,6 +5,7 @@ import { ethers } from "hardhat";
 import { NFTMinter } from "../typechain";
 
 describe("NFT Minter Contract", function () {
+
     let contract: NFTMinter;
     let accounts: SignerWithAddress[];
     
@@ -17,45 +18,44 @@ describe("NFT Minter Contract", function () {
         contract = await factory.deploy( accounts[1].address, accounts[2].address, accounts[3].address )
           
         await contract.deployed();
-      });
+    });
       
     describe("when the contract is deployed", function () {
 
         // https://docs.openzeppelin.com/contracts/4.x/access-control#querying-privileged-accounts
-     it("Should allow querying minter role", async function() {
+        it("Should allow querying minter role", async function() {
 
-        // let minterCount: number
-        const minterCount = +( await contract.getRoleMemberCount( MINTER_ROLE ) )
-        console.log("\t Number of Addresses with Mint Privedges: ", minterCount)
+            // let minterCount: number
+            const minterCount = +( await contract.getRoleMemberCount( MINTER_ROLE ) )
+            console.log("\t Number of Addresses with Mint Privedges: ", minterCount)
 
-        const members = [];
-        for (let i = 0; i < minterCount; ++i) {
-            members.push(await contract.getRoleMember( MINTER_ROLE, i));
-        }
+            const members = [];
+            for (let i = 0; i < minterCount; ++i) {
+                members.push(await contract.getRoleMember( MINTER_ROLE, i));
+            }
 
-        console.log("\t Addresses with Mint Privileges ", members)
+            console.log("\t Addresses with Mint Privileges ", members)
 
-        expect(minterCount).to.equal(4)
+            expect(minterCount).to.equal(4)
 
-        // console.log(await contract.MINTER_ROLE())
-        // console.log(await contract.PAUSER_ROLE())
-        // console.log(await contract.DEFAULT_ADMIN_ROLE())
+            // console.log(await contract.MINTER_ROLE())
+            // console.log(await contract.PAUSER_ROLE())
+            // console.log(await contract.DEFAULT_ADMIN_ROLE())
 
-     })
+        })
 
-     it("Should allow minting an NFT", async function() {
+        it("Should allow minting an NFT", async function() {
 
-        const nft = await contract.safeMint( accounts[0].address, 'https://example.com')
-        await nft.wait();
+            const nft = await contract.safeMint( accounts[0].address, 'https://example.com')
+            await nft.wait();
 
-        let tokenURI = await contract.tokenURI(0)
+            let tokenURI = await contract.tokenURI(0)
 
-        console.log('\t Dummy Token URI: ', tokenURI)
+            console.log('\t Dummy Token URI: ', tokenURI)
 
-        expect(tokenURI).to.equal('https://example.com')
+            expect(tokenURI).to.equal('https://example.com')
 
-
-     })
+        })
 
     })
 
